@@ -2,6 +2,7 @@ package root;
 
 import javafx.application.Application;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -94,7 +95,9 @@ public class Main extends Application {
         menu.setTranslateX(width / 3.4);
         menu.setTranslateY(height / 2.5);
 
-        exit.setOnMouseClicked( event -> System.exit(0) );
+        settings.setOnMouseClicked(event -> new SceneCreator().createScene(200,300));
+
+        exit.setOnMouseClicked( event -> Platform.exit());
 
         root.getChildren().addAll(menu , imgLogo, bottomlogo);
 
