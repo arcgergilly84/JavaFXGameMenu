@@ -112,6 +112,11 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    @Override
+    public void stop(){
+        //TODO
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
