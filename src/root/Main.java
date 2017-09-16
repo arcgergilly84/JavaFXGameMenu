@@ -41,79 +41,6 @@ public class Main extends Application {
     private double width = 1920;
     private double height = 1080;
 
-    /*
-        Holds all selectable menu items. For Example, Exit.
-     */
-    private static class MenuItem extends StackPane{
-        public MenuItem(String name){
-
-            /*
-                Adds a gradient to the items with purple endings.
-             */
-            LinearGradient gradient = new LinearGradient(0,0,1,0,true, CycleMethod.NO_CYCLE, new Stop[]{
-                    new Stop(0, Color.DARKRED),
-                    new Stop(0.1, Color.BLACK),
-                    new Stop(0.9, Color.BLACK),
-                    new Stop(1,Color.DARKRED)
-
-            });
-
-            /*
-                Border around the items.
-             */
-            Rectangle bg = new Rectangle(300, 50);
-            bg.setOpacity(0.5);
-
-            /*
-                Text properties of the items.
-             */
-            Text text = new Text(name);
-            text.setFill(Color.DARKGREY);
-            text.setFont(Font.font("Tw Cen MT Condensed", FontWeight.SEMI_BOLD,40));
-
-            setAlignment(Pos.CENTER);
-            getChildren().addAll(bg, text);
-
-            /*
-                Events via Mouse...additional keyboard keys to be added later.
-             */
-            setOnMouseEntered(event -> {
-                bg.setFill(gradient);
-                text.setFill(Color.WHITE);
-            });
-
-            setOnMouseExited(event -> {
-                bg.setFill(Color.BLACK);
-                text.setFill(Color.DARKGREY);
-            });
-
-            setOnMousePressed(event -> {
-                bg.setFill(Color.DARKRED);
-            });
-
-            setOnMouseReleased(event -> {
-                bg.setFill(gradient);
-            });
-        }
-    }
-
-    private static class MenuBox extends VBox{
-        public MenuBox(MenuItem... items){
-            getChildren().add(createSeparator()); //Initial separator at the top
-
-            for (MenuItem item : items){
-                getChildren().addAll(item, createSeparator()); //additional separator after each item added.
-            }
-        }
-
-        private Line createSeparator(){
-            Line sep = new Line();
-            sep.setEndX(300); //length of line
-            sep.setStroke(Color.DARKGREY); //color of line
-            return sep;
-        }
-    }
-
     private Parent createContent(){
         Pane root = new Pane();
         root.setPrefSize(width, height); //W:860 H:600
@@ -181,7 +108,6 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);
