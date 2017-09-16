@@ -167,43 +167,6 @@ public class Main extends Application {
         menu.setTranslateX(width / 3.4);
         menu.setTranslateY(height / 2.5);
 
-
-        settings.setOnMouseClicked(event -> {
-            menu.getChildren().removeAll(newGame,continueGame,friends,store, exit);
-            Pane settingsPane = new Pane();
-            settingsPane.setPrefSize(200,200);
-
-            Label ratio460 = new Label("460 x 680");
-            ratio460.setLayoutX(10);
-            ratio460.setLayoutY(50);
-            CheckBox resolution = new CheckBox();
-            resolution.setLayoutX(100);
-            resolution.setLayoutY(50);
-            Button exitButton = new Button("EXIT");
-            exitButton.setLayoutX(100);
-            exitButton.setLayoutY(100);
-            exitButton.setOnAction(pressedButton -> System.exit(0));
-
-            if(resolution.isSelected()){
-                width = 460;
-                height = 680;
-                System.out.println("Change ratio code here");
-            }
-
-
-            Scene scene = new Scene(settingsPane);
-
-            settingsPane.getChildren().addAll(ratio460, resolution, exitButton);
-
-            Stage settingsWindow = new Stage();
-            settingsWindow.setScene(scene);
-            settingsWindow.setX(600);
-            settingsWindow.setY(500);
-            settingsWindow.initStyle(StageStyle.UNDECORATED);
-            settingsWindow.show();
-
-        });
-
         exit.setOnMouseClicked( event -> System.exit(0) );
 
         root.getChildren().addAll(menu , imgLogo, bottomlogo);
