@@ -2,9 +2,14 @@ package root;
 
 import javafx.application.Application;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,6 +28,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -113,6 +119,12 @@ public class Main extends Application {
         root.setPrefSize(width, height); //W:860 H:600
         ImageView imgLogo = null;
         ImageView bottomlogo = null;
+        MenuItem newGame = new MenuItem("NEW GAME");
+        MenuItem continueGame = new MenuItem("CONTINUE");
+        MenuItem friends = new MenuItem("FRIENDS");
+        MenuItem settings = new MenuItem("SETTINGS");
+        MenuItem store = new MenuItem("STORE");
+        MenuItem exit = new MenuItem("EXIT");
 
         try(InputStream is = Files.newInputStream(Paths.get("src/resources/Images/dark.jpg"))) {
             ImageView img = new ImageView(new Image(is));
@@ -144,19 +156,55 @@ public class Main extends Application {
             System.out.println("Couldn't Load Image");
         }
 
-        MenuItem exit = new MenuItem("EXIT");
-        exit.setOnMouseClicked( event -> System.exit(0) );
-
         MenuBox menu = new MenuBox(
-                new MenuItem("NEW GAME"),
-                new MenuItem("CONTINUE"),
-                new MenuItem("FRIENDS"),
-                new MenuItem("SETTINGS"),
-                new MenuItem("STORE"),
+                newGame,
+                continueGame,
+                friends,
+                settings,
+                store,
                 exit);
 
         menu.setTranslateX(width / 3.4);
         menu.setTranslateY(height / 2.5);
+
+
+        settings.setOnMouseClicked(event -> {
+            menu.getChildren().removeAll(newGame,continueGame,friends,store, exit);
+            Pane settingsPane = new Pane();
+            settingsPane.setPrefSize(200,200);
+
+            Label ratio460 = new Label("460 x 680");
+            ratio460.setLayoutX(10);
+            ratio460.setLayoutY(50);
+            CheckBox resolution = new CheckBox();
+            resolution.setLayoutX(100);
+            resolution.setLayoutY(50);
+            Button exitButton = new Button("EXIT");
+            exitButton.setLayoutX(100);
+            exitButton.setLayoutY(100);
+            exitButton.setOnAction(pressedButton -> System.exit(0));
+
+            if(resolution.isSelected()){
+                width = 460;
+                height = 680;
+                System.out.println("Change ratio code here");
+            }
+
+
+            Scene scene = new Scene(settingsPane);
+
+            settingsPane.getChildren().addAll(ratio460, resolution, exitButton);
+
+            Stage settingsWindow = new Stage();
+            settingsWindow.setScene(scene);
+            settingsWindow.setX(600);
+            settingsWindow.setY(500);
+            settingsWindow.initStyle(StageStyle.UNDECORATED);
+            settingsWindow.show();
+
+        });
+
+        exit.setOnMouseClicked( event -> System.exit(0) );
 
         root.getChildren().addAll(menu , imgLogo, bottomlogo);
 
