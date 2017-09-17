@@ -3,38 +3,16 @@ package root;
 import javafx.application.Application;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.Window;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.net.URL;
+
 
 
 public class Main extends Application {
@@ -45,8 +23,7 @@ public class Main extends Application {
     private Parent createContent(){
         Pane root = new Pane();
         root.setPrefSize(width, height); //W:860 H:600
-        ImageView imgLogo = null;
-        ImageView bottomlogo = null;
+
         MenuItem newGame = new MenuItem("NEW GAME");
         MenuItem continueGame = new MenuItem("CONTINUE");
         MenuItem friends = new MenuItem("FRIENDS");
@@ -54,35 +31,32 @@ public class Main extends Application {
         MenuItem store = new MenuItem("STORE");
         MenuItem exit = new MenuItem("EXIT");
 
-        try(InputStream is = Files.newInputStream(Paths.get("src/resources/Images/dark.jpg"))) {
-            ImageView img = new ImageView(new Image(is));
-            img.setFitWidth(width);
-            img.setFitHeight(height);
-            root.getChildren().add(img);
-        } catch (IOException e){
-            System.out.println("Couldn't Load Image");
-        }
+        String bgImg = "root/resources/dark.jpg";
+        String title = "root/resources/logo.png";
+        String logo = "root/resources/SteamAgony.png";
 
-        try(InputStream is = Files.newInputStream(Paths.get("src/resources/Images/logo.png"))) {
-            imgLogo = new ImageView(new Image(is));
-            imgLogo.setX(1000);
-            imgLogo.setY(100);
-            imgLogo.setFitWidth(600);
-            imgLogo.setFitHeight(300);
-        } catch (IOException e){
-            System.out.println("Couldn't Load Image");
-        }
+        URL bgImgPath = Main.class.getClassLoader().getResource(bgImg);
+        ImageView img = new ImageView(new Image(bgImgPath.toExternalForm()));
+        img.setFitWidth(width);
+        img.setFitHeight(height);
+        root.getChildren().add(img);
 
-        try(InputStream is = Files.newInputStream(Paths.get("src/resources/Images/SteamAgony.png"))) {
-            bottomlogo = new ImageView(new Image(is));
-            bottomlogo.setX(100);
-            bottomlogo.setY(800);
-            bottomlogo.setFitHeight(200);
-            bottomlogo.setFitWidth(200);
-            bottomlogo.setOpacity(0.7);
-        } catch (IOException e){
-            System.out.println("Couldn't Load Image");
-        }
+        URL titleImgPath = Main.class.getClassLoader().getResource(title);
+        ImageView imgLogo = new ImageView(new Image(titleImgPath.toExternalForm()));
+        imgLogo.setX(1000);
+        imgLogo.setY(100);
+        imgLogo.setFitWidth(600);
+        imgLogo.setFitHeight(300);
+        root.getChildren().add(imgLogo);
+
+        URL logoImgPath = Main.class.getClassLoader().getResource(logo);
+        ImageView bottomlogo = new ImageView(new Image(logoImgPath.toExternalForm()));
+        bottomlogo.setX(100);
+        bottomlogo.setY(800);
+        bottomlogo.setFitHeight(200);
+        bottomlogo.setFitWidth(200);
+        bottomlogo.setOpacity(0.7);
+        root.getChildren().add(bottomlogo);
 
         MenuBox menu = new MenuBox(
                 newGame,
@@ -99,7 +73,7 @@ public class Main extends Application {
 
         exit.setOnMouseClicked( event -> Platform.exit());
 
-        root.getChildren().addAll(menu , imgLogo, bottomlogo);
+        root.getChildren().add(menu);
 
         return root;
     }
