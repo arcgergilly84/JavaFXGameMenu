@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -20,7 +21,7 @@ public class Main extends Application {
     private double width = 1920;
     private double height = 1080;
 
-    private Parent createContent(){
+    private Parent mainScreen(){
         Pane root = new Pane();
         root.setPrefSize(width, height); //W:860 H:600
 
@@ -35,28 +36,19 @@ public class Main extends Application {
         String title = "root/resources/logo.png";
         String logo = "root/resources/SteamAgony.png";
 
-        URL bgImgPath = Main.class.getClassLoader().getResource(bgImg);
-        ImageView img = new ImageView(new Image(bgImgPath.toExternalForm()));
-        img.setFitWidth(width);
-        img.setFitHeight(height);
-        root.getChildren().add(img);
 
-        URL titleImgPath = Main.class.getClassLoader().getResource(title);
-        ImageView imgLogo = new ImageView(new Image(titleImgPath.toExternalForm()));
-        imgLogo.setX(1000);
-        imgLogo.setY(100);
-        imgLogo.setFitWidth(600);
-        imgLogo.setFitHeight(300);
-        root.getChildren().add(imgLogo);
+        ResourceCreation background = new ResourceCreation(bgImg,width, height);
+        ImageView bgImage = background.setImageSize();
 
-        URL logoImgPath = Main.class.getClassLoader().getResource(logo);
-        ImageView bottomlogo = new ImageView(new Image(logoImgPath.toExternalForm()));
-        bottomlogo.setX(100);
-        bottomlogo.setY(800);
-        bottomlogo.setFitHeight(200);
-        bottomlogo.setFitWidth(200);
-        bottomlogo.setOpacity(0.7);
-        root.getChildren().add(bottomlogo);
+        ResourceCreation titleImage = new ResourceCreation(title,600,300);
+        titleImage.setImageSize();
+        ImageView imglogo = titleImage.setImageLocation(1000,100);
+
+
+        ResourceCreation sponsorLogoImage = new ResourceCreation(logo,200,200);
+        sponsorLogoImage.setImageSize();
+        ImageView sponsorLogo = sponsorLogoImage.setImageLocation(100,800);
+        sponsorLogo.setOpacity(0.6);
 
         MenuBox menu = new MenuBox(
                 newGame,
@@ -69,18 +61,19 @@ public class Main extends Application {
         menu.setTranslateX(width / 3.4);
         menu.setTranslateY(height / 2.5);
 
-        settings.setOnMouseClicked(event -> new SceneCreator().createScene(200,300));
+        settings.setOnMouseClicked(event -> new SceneCreator().createScene(width,height, "root/resources/settings.jpg"));
 
         exit.setOnMouseClicked( event -> Platform.exit());
 
-        root.getChildren().add(menu);
+        root.getChildren().addAll(bgImage, imglogo, sponsorLogo, menu);
+
 
         return root;
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Scene scene = new Scene(createContent());
+        Scene scene = new Scene(mainScreen());
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
