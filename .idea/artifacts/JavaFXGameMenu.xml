@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="JavaFXGameMenu">
+    <output-path>$PROJECT_DIR$/../../../../Executables</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="root.Main" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="JavaFXGameMenu.jar">
+        <element id="module-output" name="JavaFXGameMenu" />
+      </element>
+    </root>
+  </artifact>
+</component>

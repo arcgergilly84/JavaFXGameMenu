@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -21,10 +22,32 @@ public class Main extends Application {
     private double width = 1920;
     private double height = 1080;
 
+    /*
+        GameMenu stage
+     */
     private Parent mainScreen(){
         Pane root = new Pane();
-        root.setPrefSize(width, height); //W:860 H:600
+        root.setPrefSize(width, height);
 
+        //paths to images used(.jar safe)
+        String bgImg = "root/resources/dark.jpg";
+        String title = "root/resources/logo.png";
+        String logo = "root/resources/SteamAgony.png";
+
+        //Creation of resources.
+        ResourceCreation background = new ResourceCreation(bgImg);
+        ImageView bgImage = background.setImageSize(width, height);
+
+        ResourceCreation titleImage = new ResourceCreation(title);
+        titleImage.setImageSize(800,400);
+        ImageView imglogo = titleImage.setImageLocation(1000,100);
+
+        ResourceCreation sponsorLogoImage = new ResourceCreation(logo);
+        sponsorLogoImage.setImageSize(200, 200);
+        ImageView sponsorLogo = sponsorLogoImage.setImageLocation(100,800);
+        sponsorLogo.setOpacity(0.6);//slightly reduce opacity to blend into the bg.
+
+        //Creation of MenuItem objects.
         MenuItem newGame = new MenuItem("NEW GAME");
         MenuItem continueGame = new MenuItem("CONTINUE");
         MenuItem friends = new MenuItem("FRIENDS");
@@ -32,24 +55,7 @@ public class Main extends Application {
         MenuItem store = new MenuItem("STORE");
         MenuItem exit = new MenuItem("EXIT");
 
-        String bgImg = "root/resources/dark.jpg";
-        String title = "root/resources/logo.png";
-        String logo = "root/resources/SteamAgony.png";
-
-
-        ResourceCreation background = new ResourceCreation(bgImg,width, height);
-        ImageView bgImage = background.setImageSize();
-
-        ResourceCreation titleImage = new ResourceCreation(title,600,300);
-        titleImage.setImageSize();
-        ImageView imglogo = titleImage.setImageLocation(1000,100);
-
-
-        ResourceCreation sponsorLogoImage = new ResourceCreation(logo,200,200);
-        sponsorLogoImage.setImageSize();
-        ImageView sponsorLogo = sponsorLogoImage.setImageLocation(100,800);
-        sponsorLogo.setOpacity(0.6);
-
+        //Adding the MenuItem Objects to an encapsulating MenuBox
         MenuBox menu = new MenuBox(
                 newGame,
                 continueGame,
@@ -61,12 +67,14 @@ public class Main extends Application {
         menu.setTranslateX(width / 3.4);
         menu.setTranslateY(height / 2.5);
 
+        //Open up another stage on settings MenuItem.
         settings.setOnMouseClicked(event -> new SceneCreator().createScene(width,height, "root/resources/settings.jpg"));
 
+        //Close down of the program on selection of the Exit Menuitem
         exit.setOnMouseClicked( event -> Platform.exit());
 
+        //add all elements to the stage.
         root.getChildren().addAll(bgImage, imglogo, sponsorLogo, menu);
-
 
         return root;
     }
@@ -79,10 +87,6 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    @Override
-    public void stop(){
-        //TODO
-    }
 
     public static void main(String[] args) {
         launch(args);
