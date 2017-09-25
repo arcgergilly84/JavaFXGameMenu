@@ -5,16 +5,10 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-import java.net.URL;
-
 
 
 public class Main extends Application {
@@ -30,9 +24,9 @@ public class Main extends Application {
         root.setPrefSize(width, height);
 
         //paths to images used(.jar safe)
-        String bgImg = "root/resources/dark.jpg";
-        String title = "root/resources/logo.png";
-        String logo = "root/resources/SteamAgony.png";
+        String bgImg = "images/dark.jpg";
+        String title = "images/logo.png";
+        String logo = "images/SteamAgony.png";
 
         //Creation of resources.
         ResourceCreation background = new ResourceCreation(bgImg);
@@ -68,7 +62,7 @@ public class Main extends Application {
         menu.setTranslateY(height / 2.5);
 
         //Open up another stage on settings MenuItem.
-        settings.setOnMouseClicked(event -> new SceneCreator().createScene(width,height, "root/resources/settings.jpg"));
+        settings.setOnMouseClicked(event -> new SceneCreator().createScene(width,height, "images/settings.jpg"));
 
         //Close down of the program on selection of the Exit Menuitem
         exit.setOnMouseClicked( event -> Platform.exit());
